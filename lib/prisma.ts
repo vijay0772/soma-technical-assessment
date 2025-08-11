@@ -11,13 +11,6 @@ export const prisma = globalThis.__prisma || new PrismaClient({
       url: process.env.DATABASE_URL,
     },
   },
-  // Handle connection pooling issues in serverless environments
-  __internal: {
-    engine: {
-      enableEngineDebugMode: false,
-      enableQueryLogging: false,
-    },
-  },
 });
 
 if (process.env.NODE_ENV !== "production") globalThis.__prisma = prisma;
