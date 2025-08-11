@@ -8,7 +8,18 @@ datasource db {
 }
 
 model Todo {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   title     String
+  dueDate   DateTime?
+  imageUrl  String?   // Store Pexels image URL
+  imageId   String?   // Store Pexels image ID for reference
   createdAt DateTime  @default(now())
+  
+  // Dependency fields
+  earliestStart  DateTime? // Calculated earliest start date based on dependencies
+  isCritical     Boolean   @default(false) // Whether this todo is part of critical path
+  
+  // Self-referencing many-to-many relationship for dependencies
+  dependencies    Todo[]  @relation("TodoDependencies")
+  dependents     Todo[]  @relation("TodoDependencies")
 }
